@@ -94,7 +94,7 @@ package
 				"m44 op, vt0, vc4\n"+
 				"mov v0 ,va1";
 			var fragmSrc:String=
-			"tex ft0,v0,fs0<cube,linear,clamp,nomip>\n" +
+			"tex ft0,v0,fs0<cube,linear,clamp,mipnearest>\n" +
 			"mov oc ,ft0\n";//"mov oc ,v0 \n";
 			vertexAssembler.assemble(Context3DProgramType.VERTEX,vertexSrc);
 			fragmAssembler.assemble(Context3DProgramType.FRAGMENT,fragmSrc);
@@ -110,7 +110,7 @@ package
 			
 			trace(getSize(texture))
 			
-			cubeTexture = context3D.createCubeTexture(256, Context3DTextureFormat.BGRA,false);
+			cubeTexture = context3D.createCubeTexture(256, Context3DTextureFormat.BGRA,true);
 			//texture=context3D.createTexture(256,256,Context3DTextureFormat.BGRA,false);
 			trace(getSize(texture))
 			//texture.uploadFromBitmapData(flower.bitmapData,0);
@@ -179,71 +179,6 @@ package
 			cubeTexture.uploadFromBitmapData(flower8.bitmapData, 4, 8);
 			cubeTexture.uploadFromBitmapData(flower8.bitmapData, 5, 8);
 			
-			
-			//cubeTexture.uploadFromBitmapData(new BitmapData(256, 256, false, 0xFFFFFFFF*Math.random()), 0, 0);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(256, 256, false, 0xFFFFFFFF*Math.random()), 1, 0);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(256, 256, false, 0xFFFFFFFF*Math.random()), 2, 0);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(256, 256, false, 0xFFFFFFFF*Math.random()), 3, 0);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(256, 256, false, 0xFFFFFFFF*Math.random()), 4, 0);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(256, 256, false, 0xFFFFFFFF*Math.random()), 5, 0);
-			//
-			//
-			//cubeTexture.uploadFromBitmapData(new BitmapData(128, 128, false, 0xFFFFFFFF*Math.random()), 0, 1);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(128, 128, false, 0xFFFFFFFF*Math.random()), 1, 1);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(128, 128, false, 0xFFFFFFFF*Math.random()), 2, 1);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(128, 128, false, 0xFFFFFFFF*Math.random()), 3, 1);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(128, 128, false, 0xFFFFFFFF*Math.random()), 4, 1);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(128, 128, false, 0xFFFFFFFF*Math.random()), 5, 1);
-			//
-			//
-			//cubeTexture.uploadFromBitmapData(new BitmapData(64, 64, false, 0xFFFFFFFF*Math.random()), 0, 2);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(64, 64, false, 0xFFFFFFFF*Math.random()), 1, 2);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(64, 64, false, 0xFFFFFFFF*Math.random()), 2, 2);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(64, 64, false, 0xFFFFFFFF*Math.random()), 3, 2);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(64, 64, false, 0xFFFFFFFF*Math.random()), 4, 2);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(64, 64, false, 0xFFFFFFFF*Math.random()), 5, 0);
-			//
-			//cubeTexture.uploadFromBitmapData(new BitmapData(32, 32, false, 0xFFFFFFFF*Math.random()), 0, 3);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(32, 32, false, 0xFFFFFFFF*Math.random()), 1, 3);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(32, 32, false, 0xFFFFFFFF*Math.random()), 2, 3);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(32, 32, false, 0xFFFFFFFF*Math.random()), 3, 3);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(32, 32, false, 0xFFFFFFFF*Math.random()), 4, 3);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(32, 32, false, 0xFFFFFFFF*Math.random()), 5, 3);
-			//
-			//cubeTexture.uploadFromBitmapData(new BitmapData(16, 16, false, 0xFFFFFFFF*Math.random()), 0, 4);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(16, 16, false, 0xFFFFFFFF*Math.random()), 1, 4);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(16, 16, false, 0xFFFFFFFF*Math.random()), 2, 4);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(16, 16, false, 0xFFFFFFFF*Math.random()), 3, 4);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(16, 16, false, 0xFFFFFFFF*Math.random()), 4, 4);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(16, 16, false, 0xFFFFFFFF*Math.random()), 5, 4);
-			//
-			//cubeTexture.uploadFromBitmapData(new BitmapData(8, 8, false, 0xFFFFFFFF*Math.random()), 0, 5);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(8, 8, false, 0xFFFFFFFF*Math.random()), 1, 5);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(8, 8, false, 0xFFFFFFFF*Math.random()), 2, 5);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(8, 8, false, 0xFFFFFFFF*Math.random()), 3, 5);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(8, 8, false, 0xFFFFFFFF*Math.random()), 4, 5);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(8, 8, false, 0xFFFFFFFF*Math.random()), 5, 5);
-			//
-			//cubeTexture.uploadFromBitmapData(new BitmapData(4, 4, false, 0xFFFFFFFF*Math.random()), 0, 6);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(4, 4, false, 0xFFFFFFFF*Math.random()), 1, 6);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(4, 4, false, 0xFFFFFFFF*Math.random()), 2, 6);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(4, 4, false, 0xFFFFFFFF*Math.random()), 3, 6);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(4, 4, false, 0xFFFFFFFF*Math.random()), 4, 6);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(4, 4, false, 0xFFFFFFFF*Math.random()), 5, 6);			
-			//
-			//cubeTexture.uploadFromBitmapData(new BitmapData(2, 2, false, 0xFFFFFFFF*Math.random()), 0, 7);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(2, 2, false, 0xFFFFFFFF*Math.random()), 1, 7);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(2, 2, false, 0xFFFFFFFF*Math.random()), 2, 7);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(2, 2, false, 0xFFFFFFFF*Math.random()), 3, 7);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(2, 2, false, 0xFFFFFFFF*Math.random()), 4, 7);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(2, 2, false, 0xFFFFFFFF*Math.random()), 5, 7);
-			//
-			//cubeTexture.uploadFromBitmapData(new BitmapData(1, 1, false, 0xFFFFFFFF*Math.random()), 0, 8);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(1, 1, false, 0xFFFFFFFF*Math.random()), 1, 8);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(1, 1, false, 0xFFFFFFFF*Math.random()), 2, 8);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(1, 1, false, 0xFFFFFFFF*Math.random()), 3, 8);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(1, 1, false, 0xFFFFFFFF*Math.random()), 4, 8);
-			//cubeTexture.uploadFromBitmapData(new BitmapData(1, 1, false, 0xFFFFFFFF*Math.random()), 5, 8);
 			
 			program.upload(vertexAssembler.agalcode,fragmAssembler.agalcode);
 			
