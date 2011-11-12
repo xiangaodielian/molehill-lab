@@ -55,11 +55,10 @@ package
 			//addChild(new Bitmap(textureData));
 			trace(textureData)
 			_cubeSize = textureData.width;
-			_callBack = callBack;
 			createContex();
 		}
 		
-		private function callBack():void
+		override protected function load():void
 		{
 
 			loadVertexBuffer(RawConst.cubeVertex);

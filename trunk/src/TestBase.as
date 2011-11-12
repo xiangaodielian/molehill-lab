@@ -51,15 +51,19 @@ package
 			_context3D = stage.stage3Ds[0].context3D;
 			_context3D.configureBackBuffer(stage.stageWidth, stage.stageHeight, 8, true);
 			_context3D.enableErrorChecking = true;
+			
 			_vertexBuffer = _context3D.createVertexBuffer(_numVertex, _data32PerVertex);
 			_indexBuffer = _context3D.createIndexBuffer(_numIndex);
 			
 			//_texture = _context3D.createTexture(_textureW, _textureH,Context3DTextureFormat.BGRA,true);
-			_cubeTexture = _context3D.createCubeTexture(_cubeSize, Context3DTextureFormat.BGRA,true);
+			//_cubeTexture = _context3D.createCubeTexture(_cubeSize, Context3DTextureFormat.BGRA,true);
 			_program = _context3D.createProgram();
-			_callBack();
+			load();
 		}
-		
+		protected function load():void
+		{
+			trace(1111)
+		}
 		protected function loadVertexBuffer(data:Vector.<Number>):void
 		{
 			trace(data.length/_data32PerVertex,"data.lenth")
