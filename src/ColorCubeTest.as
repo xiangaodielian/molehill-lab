@@ -54,8 +54,7 @@ package
 			var stage3D:Stage3D=e.target as Stage3D;
 			//stage3D.viewPort=new Rectangle(0,0,800,600);
 			context3D=stage3D.context3D;
-			context3D.configureBackBuffer(800,600,8,true);
-			
+			context3D.configureBackBuffer(stage.stageWidth, stage.stageHeight, 8, true);
 			vertexBuffer=context3D.createVertexBuffer(24,6);
 			//vertexBuffer=context3D.createVertexBuffer(32,6);
 			indexBuffer=context3D.createIndexBuffer(36);
