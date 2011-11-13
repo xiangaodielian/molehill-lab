@@ -56,7 +56,7 @@ package
 			_indexBuffer = _context3D.createIndexBuffer(_numIndex);
 			
 			//_texture = _context3D.createTexture(_textureW, _textureH,Context3DTextureFormat.BGRA,true);
-			//_cubeTexture = _context3D.createCubeTexture(_cubeSize, Context3DTextureFormat.BGRA,true);
+			_cubeTexture = _context3D.createCubeTexture(_cubeSize, Context3DTextureFormat.BGRA,true);
 			_program = _context3D.createProgram();
 			load();
 		}
