@@ -48,7 +48,7 @@ package
 			rotaionM = new Matrix3D();
 			translateM = new Matrix3D();
 			trace(rotaionM.rawData, translateM.rawData);
-			translateM.prependTranslation(0, 0, 10);
+			//translateM.prependTranslation(0, 0, 10);
 			perspectiveM = new PerspectiveMatrix3D();
 			perspectiveM.perspectiveFieldOfViewLH(0.7, 4 / 3, 0.1, 100);
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, rotaionM, true);
@@ -94,27 +94,27 @@ package
 					_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, translateM, true);
 					break;
 				case Keyboard.A: 
-					translateM.appendTranslation(1, 0, 0);
-					_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, translateM, true);
-					break;
-				case Keyboard.D: 
 					translateM.appendTranslation(-1, 0, 0);
 					_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, translateM, true);
 					break;
+				case Keyboard.D: 
+					translateM.appendTranslation(1, 0, 0);
+					_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, translateM, true);
+					break;
 				case Keyboard.UP: 
-					rotaionM.appendRotation(1, new Vector3D(1, 0, 0));
+					rotaionM.appendRotation(2, new Vector3D(1, 0, 0));
 					_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, rotaionM, true);
 					break;
 				case Keyboard.DOWN: 
-					rotaionM.appendRotation(-1, new Vector3D(1, 0, 0));
+					rotaionM.appendRotation(-2, new Vector3D(1, 0, 0));
 					_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, rotaionM, true);
 					break;
 				case Keyboard.LEFT: 
-					rotaionM.appendRotation(1, new Vector3D(0, 1, 0));
+					rotaionM.appendRotation(2, new Vector3D(0, 1, 0));
 					_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, rotaionM, true);
 					break;
 				case Keyboard.RIGHT: 
-					rotaionM.appendRotation(-1, new Vector3D(0, 1, 0));
+					rotaionM.appendRotation(-2, new Vector3D(0, 1, 0));
 					_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, rotaionM, true);
 					break;
 			
