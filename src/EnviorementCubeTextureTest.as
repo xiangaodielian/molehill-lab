@@ -15,7 +15,7 @@ package
 	 * ...
 	 * @author Physwf
 	 */
-	public class EnviorementTeapotTextureTest extends TestBase 
+	public class EnviorementCubeTextureTest extends TestBase 
 	{
 		private var _rotateM:Matrix3D;
 		private var _translateM:Matrix3D;
@@ -124,7 +124,7 @@ package
 		private var Top7:Class;
 		
 		
-		public function EnviorementTeapotTextureTest() 
+		public function EnviorementCubeTextureTest() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, addStage);
 		}
@@ -132,8 +132,8 @@ package
 		private function addStage(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addStage);
-			_numVertex = RawConst.teapotVertex.length / 6;
-			_numIndex = RawConst.teapotIndex.length;
+			_numVertex = RawConst.cubeVertexColor.length / 6;
+			_numIndex = RawConst.cubeIndex.length;
 			_cubeSize = 128;
 			_data32PerVertex = 6;
 			createContex();
@@ -141,10 +141,10 @@ package
 		
 		override protected function load():void
 		{
-			loadVertexBuffer(RawConst.teapotVertex);
+			loadVertexBuffer(RawConst.cubeVertexColor);
 			setVertexBufferAt(0, 0, "float3");
-			setVertexBufferAt(1, 3, "float3");
-			loadIndexBuffer(RawConst.teapotIndex);
+			setVertexBufferAt(1, 0, "float3");
+			loadIndexBuffer(RawConst.cubeIndex);
 			
 			_rotateM = new Matrix3D();
 			_translateM = new Matrix3D();
