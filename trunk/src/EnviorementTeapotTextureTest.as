@@ -218,8 +218,9 @@ package
 			"m44 vt0 ,va0,vc0\n" +
 			"m44 vt1,vt0,vc4\n" +
 			"m44 vt2,vt1,vc8\n" +
-			"mov op,vt2\n"
-			+"mov v0,va1";
+			"mov op,vt2\n"+
+			"m44 vt0,va1,vc0\n" +
+			"mov v0,vt0";
 			var fragmentShaderSrc:String =
 			"tex ft0,v0,fs0<cube,linear,mipnearest,clamp>\n" +
 			"mov oc,ft0";
