@@ -215,12 +215,26 @@ package
 			setCubeTextureAt(0);
 			
 			var vertexShaderSrc:String = 
-			"m44 vt0 ,va0,vc0\n" +
-			"m44 vt1,vt0,vc4\n" +
-			"m44 vt2,vt1,vc8\n" +
-			"mov op,vt2\n"+
-			"m44 vt0,va1,vc0\n" +
-			"mov v0,vt0";
+			"m44 vt0,		va0,		vc0		\n" 	+
+			"m44 vt1,		vt0,		vc4		\n" 	+
+			"m44 vt2,		vt1,		vc8		\n" 	+
+			"mov op,		vt2					\n"		+
+			"m44 vt0,		va1,		vc0		\n" 	+	//旋转法向量
+			//"nrm vt0.xyz,	vt0.xyz				\n" 	+	//归一化法向量
+			//"neg vt1.xyz,	vt1.xyz				\n" 	+	//view向量取反
+			//"nrm vt1.xyz,	vt1.xyz				\n" 	+	//view向量归一化
+			//"dp3 vt6.z,		vt0,		vt1		\n" 	+	//法向量方向的分量大小
+			//"mul vt7,		vt1,		vt6.z	\n"		+	//法向量方向的分量
+			//"sub vt2,		vt1,		vt7		\n" 	+	//垂直于法向量方向的分量
+			//"neg vt2,		vt2					\n" 	+	//垂直方向分量取反
+			//"add vt0,		vt7,		vt2		\n"		+	//反射方向向量
+			"nrm vt0.xyz,	vt0.xyz				\n" 	+	//归一化法向量
+			"nrm vt1.xyz,	vt1.xyz				\n" 	+	//view向量归一化
+			"dp3 vt2.x,		vt1,vt0				\n" +
+			"mul vt3,		vt0,		vt2.x	\n" +
+			"add vt4,		vt3,		vt3		\n" +
+			"sub vt0,		vt1,		vt4		\n" +
+			"mov v0,		vt0";
 			var fragmentShaderSrc:String =
 			"tex ft0,v0,fs0<cube,linear,mipnearest,clamp>\n" +
 			"mov oc,ft0";
