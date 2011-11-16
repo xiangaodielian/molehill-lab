@@ -149,7 +149,7 @@ package
 			_rotateM = new Matrix3D();
 			_translateM = new Matrix3D();
 			_perspectiveM = new PerspectiveMatrix3D();
-			_perspectiveM.perspectiveFieldOfViewLH(0.7, 4 / 3, 0.1, 100);
+			_perspectiveM.perspectiveFieldOfViewLH(Math.PI * .5, 4 / 3, -100, 1);
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX,0,_rotateM,true);
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX,4,_translateM,true);
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 8, _perspectiveM, true);
@@ -254,10 +254,12 @@ package
 				case Keyboard.W: 
 					_translateM.appendTranslation(0, 0, 1);
 					_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _translateM, true);
+					trace(_translateM.rawData);
 					break;
 				case Keyboard.S: 
 					_translateM.appendTranslation(0, 0, -1);
 					_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _translateM, true);
+					trace(_translateM.rawData);
 					break;
 				case Keyboard.A: 
 					_translateM.appendTranslation(-1, 0, 0);

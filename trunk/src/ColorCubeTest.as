@@ -90,7 +90,7 @@ package
 			context3D.setTextureAt(0,cubeTexture);
 			
 			var pm:PerspectiveMatrix3D=new PerspectiveMatrix3D();
-			pm.perspectiveFieldOfViewLH(0.7, 4/3,0.1, 100);
+			pm.perspectiveFieldOfViewLH(0.7, 4/3,1, 100);
 			context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX,4,pm,true);
 			unitMatrix=new Matrix3D();
 			unitMatrix.prependTranslation(0, 0,15);
