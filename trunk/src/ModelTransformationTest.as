@@ -27,7 +27,7 @@ package
 			_numVertex = 24;
 			_numIndex = 36;
 			_data32PerVertex = 6;
-			
+			_cubeSize = 1;
 		
 		}
 		private function addStage(e:Event):void 

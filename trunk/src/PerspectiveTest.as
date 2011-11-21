@@ -97,8 +97,8 @@ package
 			_translateM = new Matrix3D();
 			_rotateM = new Matrix3D();
 			var pm:PerspectiveMatrix3D = new PerspectiveMatrix3D();
-			_translateM.prependTranslation(0, 0,1);
-			pm.perspectiveFieldOfViewLH(Math.PI/3, 4 / 3, -1000, -100);
+			_translateM.prependTranslation(0, 0,-100);
+			pm.perspectiveFieldOfViewLH(Math.PI/3, 4 / 3, -1000, -10);
 			context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX,0,_rotateM,true);
 			context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX,4,_translateM,true);
 			context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX,8,pm,true);
@@ -106,7 +106,7 @@ package
 			unitMatrix=new Matrix3D();
 			
 			//unitMatrix.appendScale(0.5,0.5,0.5);
-			context3D.setCulling(Context3DTriangleFace.BACK);
+			context3D.setCulling(Context3DTriangleFace.NONE);
 			
 			context3D.setProgram(program);
 			addEventListener(Event.ENTER_FRAME, render);
@@ -123,7 +123,7 @@ package
 					trace(_translateM.rawData);
 					break;
 				case Keyboard.S: 
-					_translateM.appendTranslation(0, 0, -10);
+					_translateM.appendTranslation(0, 0, -1);
 					context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _translateM, true);
 					trace(_translateM.rawData);
 					break;

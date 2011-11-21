@@ -12,7 +12,7 @@ package camera.lens
 		protected var _xyRatio:Number=1.0;
 		
 		protected var _pswMatrix:PswMatrix3D;
-		private var _isDirty:Boolean = false;
+		protected var _isDirty:Boolean = false;
 		
 		public function LensBase() 
 		{
@@ -54,6 +54,7 @@ package camera.lens
 		public function get pswMatrix():PswMatrix3D
 		{
 			if (_isDirty) updatePswMatrix();
+			_isDirty = false;
 			return _pswMatrix;
 		}
 		
