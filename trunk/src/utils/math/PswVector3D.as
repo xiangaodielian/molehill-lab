@@ -21,7 +21,7 @@ package utils.math
 			return Math.sqrt(x * x + y * y +z * z);
 		}
 		
-		public function get lengthSquared():void
+		public function get lengthSquared():Number
 		{
 			return x * x + y * y +z * z;
 		}
@@ -33,7 +33,7 @@ package utils.math
 		
 		public static function angleBetween(v1:PswVector3D,v2:PswVector3D):Number
 		{
-			return Math.acos(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
+			return Math.acos(v1.x * v2.x+ v1.y * v2.y+v1.z * v2.z);
 		}
 		
 		public function copyFrom(source:PswVector3D):void
@@ -43,7 +43,7 @@ package utils.math
 		
 		public function crossProduct(a:PswVector3D):PswVector3D 
 		{
-			
+			return null;
 		}
 		
 		public function decrementBy(a:PswVector3D):void
@@ -75,7 +75,7 @@ package utils.math
 		
 		public function nearEquarls(toCompare:PswVector3D, tolerance:Number, allFour:Boolean = false):Boolean
 		{
-			
+			return false;
 		}
 		
 		public function negate():void
