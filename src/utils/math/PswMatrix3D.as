@@ -56,18 +56,56 @@ package utils.math
 		
 		public function get determinant():Number
 		{
-			(a0 * a5 * a10 * a15) + (a1 * a6 * a11 * a12) + (a2 * a7 * a8 * a13) + (a3 * a4 * a9 * a14) -
-			(a3 * a6 * a9 * a12) + (a2 * a5 * a8 * a15) + (a1 * a4 * a11 * a14) + (a0 * a13 * a10 * a7);
+			return (a0 * a5 * a10 * a15) + (a1 * a6 * a11 * a12) + (a2 * a7 * a8 * a13) + (a3 * a4 * a9 * a14) - (a3 * a6 * a9 * a12) + (a2 * a5 * a8 * a15) + (a1 * a4 * a11 * a14) + (a0 * a13 * a10 * a7);
 		}
 		
 		public function matrixMultiply(m:PswMatrix3D):void
 		{
+			var na0:Number = a0 *  m.a0 + a1 *  m.a4 + a2 *  m.a8 + a3 *  m.a12;
+			var na1:Number = a0 *  m.a1 + a1 *  m.a5 + a2 *  m.a9 + a3 *  m.a13;
+			var na2:Number = a0 *  m.a2 + a1 *  m.a6 + a2 *  m.a10 + a3 *  m.a14;
+			var na3:Number = a0 *  m.a3 + a1 *  m.a7 + a2 *  m.a11 + a3 *  m.a15;
+			var na4:Number = a4 *  m.a0 + a5 *  m.a4 + a6 *  m.a8 + a7 *  m.a12;
+			var na5:Number = a4 *  m.a1 + a5 *  m.a5 + a6 *  m.a9 + a7 *  m.a13;
+			var na6:Number = a4 *  m.a2 + a5 *  m.a6 + a6 *  m.a10 + a7 *  m.a14;
+			var na7:Number = a4 *  m.a3 + a5 *  m.a7 + a6 *  m.a11 + a7 *  m.a15;
+			var na8:Number = a8 *  m.a0 + a9 *  m.a4 + a10 * m.a8 + a11 * m.a12;
+			var na9:Number = a8 *  m.a1 + a9 *  m.a5 + a10 * m.a9 + a11 * m.a13;
+			var na10:Number = a12 * m.a2 + a13 * m.a6 + a14 * m.a10 + a15 * m.a14;
+			var na11:Number = a8 *  m.a3 + a9 *  m.a7 + a10 * m.a11 + a11 * m.a15;
+			var na12:Number = a12 * m.a0 + a13 * m.a4 + a14 * m.a8 + a15 * m.a12;
+			var na13:Number = a12 * m.a1 + a13 * m.a5 + a14 * m.a9 + a15 * m.a13;
+			var na14:Number = a12 * m.a2 + a13 * m.a6 + a14 * m.a10 + a15 * m.a14;
+			var na15:Number = a12 * m.a3 + a13 * m.a7 + a14 * m.a11 + a15 * m.a15;
+			//a0 = na0;
+			//a1 = na1;
+			//a2 = na2;
+			//a3 = na3;
+			//a4 = na4;
+			//a5 = na5;
+			//a6 = na6;
+			//a7 = na7;
+			//a8 = na8;
+			//a9 = na9;
+			//a10 = na10;
+			//a11 = na11;
+			//a12 = na12;
+			//a13 = na13;
+			//a14 = na14;
+			//a15 = na15;
 			
+			copyFromRawData
+			(
+				a0 *  m.a0 + a1 *  m.a4 + a2 *  m.a8 + a3 *  m.a12, 	a0 *  m.a1 + a1 *  m.a5 + a2 *  m.a9 + a3 *  m.a13, 	a0 *  m.a2 + a1 *  m.a6 + a2 *  m.a10 + a3 *  m.a14, 	a0 *  m.a3 + a1 *  m.a7 + a2 *  m.a11 + a3 *  m.a15,
+				a4 *  m.a0 + a5 *  m.a4 + a6 *  m.a8 + a7 *  m.a12, 	a4 *  m.a1 + a5 *  m.a5 + a6 *  m.a9 + a7 *  m.a13, 	a4 *  m.a2 + a5 *  m.a6 + a6 *  m.a10 + a7 *  m.a14, 	a4 *  m.a3 + a5 *  m.a7 + a6 *  m.a11 + a7 *  m.a15,
+				a8 *  m.a0 + a9 *  m.a4 + a10 * m.a8 + a11 * m.a12,		a8 *  m.a1 + a9 *  m.a5 + a10 * m.a9 + a11 * m.a13,		a8 *  m.a2 + a9 *  m.a6 + a10 * m.a10 + a11 * m.a14,	a8 *  m.a3 + a9 *  m.a7 + a10 * m.a11 + a11 * m.a15,
+				a12 * m.a0 + a13 * m.a4 + a14 * m.a8 + a15 * m.a12,		a12 * m.a1 + a13 * m.a5 + a14 * m.a9 + a15 * m.a13,		a12 * m.a2 + a13 * m.a6 + a14 * m.a10 + a15 * m.a14, 	a12 * m.a3 + a13 * m.a7 + a14 * m.a11 + a15 * m.a15
+			);
 		}
 		
 		public function vectorMultiply(m:PswVector3D):PswVector3D
 		{
-			
+			return null;
 		}
 		
 		public function rotate():void
@@ -111,6 +149,16 @@ package utils.math
 		public function toMatrix3D():Matrix3D
 		{
 			return new Matrix3D(Vector.<Number>([a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15]));
+		}
+		
+		public function toString():String
+		{
+			return "[\n"+
+			a0 + "," + a1 + "," + a2 + "," + a3 + ",\n" +
+			a4 + "," + a5 + "," + a6 + "," + a7 + ",\n" +
+			a8 + "," + a9 + "," + a10 + "," + a11 + ",\n" +
+			a12 + "," + a13 + "," + a14 + "," + a15 + ",\n" +
+			"]";
 		}
 		
 	}

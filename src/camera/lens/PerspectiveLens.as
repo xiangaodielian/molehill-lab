@@ -35,7 +35,7 @@ package camera.lens
 				_Zp/_xyRatio, 	0, 		0, 				0,
 				0, 				_Zp, 	0, 				0,
 				0, 				0, 		_zFar * temp, 	-_zNear * _zFar *  temp,
-				0, 				0, 		1, 				0
+				0, 				0, 		1, 				1
 			);
 		}
 		

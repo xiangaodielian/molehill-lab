@@ -45,7 +45,7 @@ package camera.lens
 			return _xyRatio;
 		}
 		
-		public function set xyRatio(v:Number):Number
+		public function set xyRatio(v:Number):void
 		{
 			_xyRatio = v;
 			_isDirty = true;
@@ -55,7 +55,9 @@ package camera.lens
 		{
 			if (_isDirty) updatePswMatrix();
 			_isDirty = false;
+			trace(_pswMatrix.toMatrix3D().rawData,"_pswMatrix")
 			return _pswMatrix;
+			
 		}
 		
 		protected function updatePswMatrix():void

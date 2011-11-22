@@ -32,7 +32,7 @@ package
 		protected var _numIndex:int;
 		protected var _textureW:Number;
 		protected var _textureH:Number;
-		protected var _cubeSize:int;
+		protected var _cubeSize:int=1;
 		protected var _callBack:Function;
 		
 		public function TestBase() 
