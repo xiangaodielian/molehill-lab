@@ -95,45 +95,31 @@ package camera
 			_isDirty = true;
 		}
 		
-		public function lookAt(p:PswVector3D):void
+		public function lookAt(p:PswVector3D,upAxis:PswVector3D=null):void
 		{
 			var direc:PswVector3D = p.subtract(_pos);
 			direc.normalize();
 			_direction = direc;
-			trace(_direction);
+			
+			upAxis ||= new  PswVector3D(0, 1, 0);
+			var xAxis:PswVector3D = _direction.crossProduct(upAxis);
+			var yAxis:PswVector3D = xAxis.crossProduct(_direction);
+			var zAxis:PswVector3D = _direction;
+			_rotationMatrix.copyFromRawData
+			(
+				xAxis.x, xAxis.y, xAxis.z, 0,
+				yAxis.x, yAxis.y, yAxis.z, 0,
+				zAxis.x, zAxis.y, zAxis.z, 0,
+				0,0,0,1
+			);
 			_isDirty = true;
 		}
 		
 		public function get viewProjectioin():PswMatrix3D
 		{
-			var diX:Number,
-				diY:Number,
-				diZ:Number;
-			var cos1:Number,
-				sin1:Number,
-				cos2:Number,
-				sin2:Number;
+
 			if (_isDirty)
 			{
-				diX = _direction.x; diY = _direction.y; diZ = _direction.z;
-				cos1 = diZ / Math.sqrt(diX * diX +diZ * diZ);
-				sin1 = diX / Math.sqrt(diX * diX +diZ * diZ);
-				cos2 = diZ / Math.sqrt(diY * diY +diZ * diZ);
-				sin2 = diY / Math.sqrt(diY * diY +diZ * diZ);
-				_rotationMatrix.copyFromRawData
-				(
-					cos1 , 	-sin1 * sin2 , 	-sin1 * cos2,	0,
-					0, 		cos2, 			-sin2, 			0,
-					sin1, 	cos1 * sin2, 	cos1 * cos2, 	0,
-					0,0,0,1
-				);
-				//trace("_rotationMatrix\n",_rotationMatrix.toString(),"\n_rotationMatrix");
-		/*		(
-					cos1, 			0, 		sin1, 			0,
-					- sin1 * sin2, 	cos2, 	sin2 * cos1, 	0,
-					-cos2 * sin1, 	-sin2, 	cos2 * cos1, 	0,
-					0,				0,		0,				1
-				);*/
 				_translateMatrix.copyFromRawData
 				(
 					1, 0, 0, -_pos.x,
@@ -141,13 +127,9 @@ package camera
 					0, 0, 1, -_pos.z,
 					0, 0, 0, 1
 				);
-				//trace("---------\n",_translateMatrix.toMatrix3D().rawData,"\n---------")
 				_rotationMatrix.matrixMultiply(_translateMatrix);
-				//trace("_translateMatrix\n",_translateMatrix,"_translateMatrix\n")
 				_viewProjection = _lens.pswMatrix.clone();
-				//trace("_lens.pswMatrix",_viewProjection,"_lens.pswMatrix")
 				_viewProjection.matrixMultiply(_rotationMatrix);
-				//trace("_viewProjection\n",_viewProjection,"_viewProjection\n")
 				_isDirty = false;
 			}
 			return _viewProjection;

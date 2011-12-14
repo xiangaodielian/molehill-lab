@@ -43,7 +43,12 @@ package utils.math
 		
 		public function crossProduct(a:PswVector3D):PswVector3D 
 		{
-			return null;
+			return new PswVector3D
+			(
+			y * a.z -z * a.y, 
+			z * a.x - x * a.z,
+			x * a.y - y * a.z
+			);
 		}
 		
 		public function decrementBy(a:PswVector3D):void

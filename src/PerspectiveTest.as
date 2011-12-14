@@ -80,7 +80,8 @@ package
 			var vertexSrc:String=
 				"m44 vt0, va0, vc0\n" +
 				"m44 vt1, vt0, vc4\n" +
-				"m44 op, vt1, vc8\n"+
+				"m44 vt2, vt1, vc8\n" +
+				"mov op vt2"+
 				"mov v0 ,va1";
 			var fragmSrc:String="mov oc ,v0 \n";
 			//"tex ft0,v0,fs0<cube,linear,clamp,mipnearest>\n" +
@@ -97,8 +98,8 @@ package
 			_translateM = new Matrix3D();
 			_rotateM = new Matrix3D();
 			var pm:PerspectiveMatrix3D = new PerspectiveMatrix3D();
-			_translateM.prependTranslation(0, 0,-100);
-			pm.perspectiveFieldOfViewLH(Math.PI/3, 4 / 3, -1000, -10);
+			_translateM.prependTranslation(0, 0,10);
+			pm.perspectiveFieldOfViewLH(1.5, 4 / 3, 0.1, 1000);
 			context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX,0,_rotateM,true);
 			context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX,4,_translateM,true);
 			context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX,8,pm,true);
