@@ -77,7 +77,7 @@ package
 			//_translateM.prependTranslation(0, 0, 10);
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _rotateM, true);
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 8, _translateM, true);
-			_context3D.setCulling(Context3DTriangleFace.BACK);
+			_context3D.setCulling(Context3DTriangleFace.FRONT);
 			var vertexShaderSrc:String = 
 			"m44 vt0,va0,vc4\n" +
 			"m44 vt2 ,vt0,vc8\n"+
