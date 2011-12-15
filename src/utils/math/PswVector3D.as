@@ -101,6 +101,7 @@ package utils.math
 			
 		}
 		
+		
 		public  function scaleBy(s:Number):void
 		{
 			
@@ -120,6 +121,7 @@ package utils.math
 		{
 			return "[x=" + x + ",y=" + y + ",z=" + z + ",w=" + w + "]";
 		}
+	
 	}
 
 }
