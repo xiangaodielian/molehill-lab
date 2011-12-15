@@ -20,8 +20,9 @@ package
 	public class PswCameraTest extends TestBase 
 	{
 		private var _camera:PswCamera;
-		private var _rotateM:Matrix3D;
-		private var _translateM:Matrix3D;
+		private var _cPos:PswVector3D;
+		private var _rotateM:PswMatrix3D;
+		private var _translateM:PswMatrix3D;
 		
 		public function PswCameraTest() 
 		{
@@ -31,21 +32,21 @@ package
 		private function addStage(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addStage);
-			var test:PswMatrix3D = new PswMatrix3D
-			(
-				1, 0, 0, 1,
-				0, 1, 0, 2,
-				0, 0, 1, 2,
-				0, 0, 0, 1
-			);
-			var test2:PswMatrix3D = new PswMatrix3D
-			(
-				1, 0, 0, 1,
-				0, 1, 0, 1,
-				0, 0, 1, 1,
-				0, 0, 0, 1
-			);
-			test.matrixMultiply(test2);
+			//var test:PswMatrix3D = new PswMatrix3D
+			//(
+				//1, 0, 0, 1,
+				//0, 1, 0, 2,
+				//0, 0, 1, 2,
+				//0, 0, 0, 1
+			//);
+			//var test2:PswMatrix3D = new PswMatrix3D
+			//(
+				//1, 0, 0, 1,
+				//0, 1, 0, 1,
+				//0, 0, 1, 1,
+				//0, 0, 0, 1
+			//);
+			//test.matrixMultiply(test2);
 			//trace(test.toString());
 			//return;
 			var lens:PerspectiveLens = new PerspectiveLens();
@@ -54,7 +55,8 @@ package
 			lens.zFar = 1000;
 			lens.xyRatio = 5 / 4;
 			_camera = new PswCamera(lens);
-			_camera.position = new PswVector3D(0, 0, -10);
+			_cPos = new PswVector3D(0, 0, -30,1);
+			_camera.position = _cPos;
 			
 			//trace(_camera.viewProjectioin.toMatrix3D().rawData);
 			_numVertex = RawConst.cubeVertex.length / 6;
@@ -72,16 +74,16 @@ package
 			setVertexBufferAt(1, 3, "float3");
 			loadIndexBuffer(RawConst.cubeIndex);
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, _camera.viewProjectioin.toMatrix3D(), false);
-			_rotateM = new Matrix3D();
-			_translateM = new Matrix3D();
+			_rotateM = new PswMatrix3D();
+			_translateM = new PswMatrix3D();
 			//_translateM.prependTranslation(0, 0, 10);
-			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _rotateM, true);
-			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 8, _translateM, true);
+			//_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _rotateM.toMatrix3D(), true);
+			//_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 8, _translateM.toMatrix3D(), true);
 			_context3D.setCulling(Context3DTriangleFace.FRONT);
 			var vertexShaderSrc:String = 
-			"m44 vt0,va0,vc4\n" +
-			"m44 vt2 ,vt0,vc8\n"+
-			"m44 vt1 ,vt0,vc0\n" +
+			//"m44 vt0,va0,vc4\n" +
+			//"m44 vt2 ,vt0,vc8\n"+
+			"m44 vt1 ,va0,vc0\n" +
 			"mov op,vt1\n" +
 			"mov v0,va1\n";
 			var fragmentShaderSrc:String =
@@ -97,35 +99,35 @@ package
 			switch(e.keyCode)
 			{
 				case Keyboard.A:
-					_camera.x++;
+					_rotateM.appendRotation(1, new PswVector3D(1, 0, 0));
 					break;
 				case Keyboard.W:
-					//trace(_camera.z)
-					_camera.z++;
+					_rotateM.appendRotation(1, new PswVector3D(0, 0, 1));
 					break;
 				case Keyboard.D:
-					_camera.x--;
+					_rotateM.appendRotation(-1, new PswVector3D(1, 0, 0));
 					break;
 				case Keyboard.S:
-					_camera.z--;
+					_rotateM.appendRotation(-1, new PswVector3D(0, 0, 1));
 					break;
 				case Keyboard.Z:
-					_camera.y++;
+					_rotateM.appendRotation(1, new PswVector3D(0, 1, 0));
 					break;
 				case Keyboard.X:
-					_camera.y--;
-					
+					_rotateM.appendRotation(-1, new PswVector3D(0, 1, 0));
 					break;
 			}
-			//trace(_camera.x,_camera.y,_camera.z)
-			_camera.lookAt(new PswVector3D(0,0,0,0))
+			_camera.lookAt(new PswVector3D(0, 0, 0, 1))
+			trace(_rotateM)
+			_camera.position = _rotateM.vectorMultiply(_camera.position);
+			//trace(_camera.position,_camera.position.length)
+			
+			//trace(_camera.viewProjectioin)
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, _camera.viewProjectioin.toMatrix3D(), false);
 		}
 		
 		private function render(e:Event):void 
 		{
-			//_rotateM.appendRotation(10, new Vector3D(0,1,0), null);
-			//_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _rotateM, true);
 			_context3D.clear(0, 0, 0, 1);
 			_context3D.drawTriangles(_indexBuffer);
 			_context3D.present();

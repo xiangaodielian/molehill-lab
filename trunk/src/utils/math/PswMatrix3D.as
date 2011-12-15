@@ -105,12 +105,39 @@ package utils.math
 		
 		public function vectorMultiply(m:PswVector3D):PswVector3D
 		{
-			return null;
+			return new PswVector3D
+			(
+			a0 * m.x + a1 * m.y + a2 * m.z + a3 * m.w ,
+			a4 * m.x + a5 * m.y + a6 * m.z + a7 * m.w ,
+			a8 * m.x + a9 * m.y + a10 * m.z + a11 * m.w ,
+			a12 * m.x + a13 * m.y + a14 * m.z + a15 * m.w 
+			);
 		}
 		
-		public function rotate():void
+		public function appendRotation(digree:Number,axis:PswVector3D,pivotPoint:PswVector3D=null):void
 		{
-			
+			pivotPoint ||= new PswVector3D();
+			var cos:Number = Math.cos(digree);
+			var sin:Number = Math.sin(digree);
+			var x:Number = axis.x;
+			var y:Number = axis.y;
+			var z:Number = axis.z;
+			a0 = cos +(1 - cos) * x * x;
+			a1 = (1 - cos) * x * y -z * sin;
+			a2 = (1 - cos) * x * z + y * sin;
+			a3 = pivotPoint.x;
+			a4 = (1 - cos) * x * y + z * sin;
+			a5 = cos +(1 - cos) * y * y;
+			a6 = (1 - cos) * y * z -x * sin;
+			a7 = pivotPoint.y;
+			a8 = (1 - cos) * x * z - y * sin;
+			a9 = (1 - cos) * y * z + x * sin;
+			a10 = cos + (1 - cos) * z * z;
+			a11 = pivotPoint.z;
+			a12 = 0;
+			a13 = 0;
+			a14 = 0;
+			a15 = 1;
 		}
 		
 		public function scale(xScale:Number, yScale:Number, zScale:Number):void

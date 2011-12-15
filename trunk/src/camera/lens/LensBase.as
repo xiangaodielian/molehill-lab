@@ -55,7 +55,7 @@ package camera.lens
 		{
 			if (_isDirty) updatePswMatrix();
 			_isDirty = false;
-			trace(_pswMatrix.toMatrix3D().rawData,"_pswMatrix")
+			//trace(_pswMatrix.toMatrix3D().rawData,"_pswMatrix")
 			return _pswMatrix;
 			
 		}
