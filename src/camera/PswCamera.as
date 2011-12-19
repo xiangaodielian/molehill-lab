@@ -101,10 +101,14 @@ package camera
 			direc.normalize();
 			_direction = direc;
 			
-			upAxis ||= new  PswVector3D(0, 1, 0);
-			var xAxis:PswVector3D = _direction.crossProduct(upAxis);
-			var yAxis:PswVector3D = xAxis.crossProduct(_direction);
+			upAxis ||= new  PswVector3D(0,1, 0);
+			upAxis.normalize();
+			var xAxis:PswVector3D =upAxis.crossProduct(_direction);/* _direction.crossProduct(upAxis); */
+			xAxis.normalize();
+			var yAxis:PswVector3D = _direction.crossProduct(xAxis);/*xAxis.crossProduct(_direction); */
 			var zAxis:PswVector3D = _direction;
+		
+			trace(xAxis,yAxis,zAxis,"xAxis,yAxis,zAxis")
 			_rotationMatrix.copyFromRawData
 			(
 				xAxis.x, xAxis.y, xAxis.z, 0,
@@ -127,8 +131,12 @@ package camera
 					0, 0, 1, -_pos.z,
 					0, 0, 0, 1
 				);
+				//trace(_rotationMatrix,"_rotationMatrixBefore");
 				_rotationMatrix.matrixMultiply(_translateMatrix);
+				//trace(_rotationMatrix, "_rotationMatrixAfter");
+				
 				_viewProjection = _lens.pswMatrix.clone();
+				//trace(_viewProjection);
 				_viewProjection.matrixMultiply(_rotationMatrix);
 				_isDirty = false;
 			}
