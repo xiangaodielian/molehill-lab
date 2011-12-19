@@ -51,13 +51,15 @@ package
 			//return;
 			var lens:PerspectiveLens = new PerspectiveLens();
 			lens.fov = 1.0;
-			lens.zNear = 0.1;
+			lens.zNear = 1;
 			lens.zFar = 1000;
-			lens.xyRatio = 5 / 4;
+			lens.xyRatio = stage.stageWidth / stage.stageHeight;
 			_camera = new PswCamera(lens);
-			_cPos = new PswVector3D(0, 0, -30,1);
+			_cPos = new PswVector3D(0, 0, -10,1);
 			_camera.position = _cPos;
-			
+			_camera.lookAt(new PswVector3D(0, 0, 0, 1))
+			//trace(_camera.viewProjectioin)
+			//return;
 			//trace(_camera.viewProjectioin.toMatrix3D().rawData);
 			_numVertex = RawConst.cubeVertex.length / 6;
 			_numIndex = RawConst.cubeIndex.length;
@@ -74,12 +76,13 @@ package
 			setVertexBufferAt(1, 3, "float3");
 			loadIndexBuffer(RawConst.cubeIndex);
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, _camera.viewProjectioin.toMatrix3D(), false);
+			//trace(_camera.viewProjectioin.toMatrix3D().rawData,"_camera.viewProjectioin.toMatrix3D().rawData");
 			_rotateM = new PswMatrix3D();
 			_translateM = new PswMatrix3D();
 			//_translateM.prependTranslation(0, 0, 10);
 			//_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _rotateM.toMatrix3D(), true);
 			//_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 8, _translateM.toMatrix3D(), true);
-			_context3D.setCulling(Context3DTriangleFace.FRONT);
+			_context3D.setCulling(Context3DTriangleFace.BACK);
 			var vertexShaderSrc:String = 
 			//"m44 vt0,va0,vc4\n" +
 			//"m44 vt2 ,vt0,vc8\n"+
@@ -92,36 +95,39 @@ package
 			setProgram();
 			addEventListener(Event.ENTER_FRAME, render);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			
 		}
 		
 		private function onKeyDown(e:KeyboardEvent):void 
 		{
+			//trace(Keyboard.W,e.keyCode)
 			switch(e.keyCode)
 			{
+				
 				case Keyboard.A:
-					_rotateM.appendRotation(1, new PswVector3D(1, 0, 0));
+					_rotateM.appendRotation(.01, new PswVector3D(1, 0, 0));
 					break;
 				case Keyboard.W:
-					_rotateM.appendRotation(1, new PswVector3D(0, 0, 1));
+					_rotateM.appendRotation(.01, new PswVector3D(0, 0, 1));
 					break;
 				case Keyboard.D:
-					_rotateM.appendRotation(-1, new PswVector3D(1, 0, 0));
+					_rotateM.appendRotation(-.01, new PswVector3D(1, 0, 0));
 					break;
 				case Keyboard.S:
-					_rotateM.appendRotation(-1, new PswVector3D(0, 0, 1));
+					_rotateM.appendRotation(-.01, new PswVector3D(0, 0, 1));
 					break;
 				case Keyboard.Z:
-					_rotateM.appendRotation(1, new PswVector3D(0, 1, 0));
+					_rotateM.appendRotation(.01, new PswVector3D(0, 1, 0));
 					break;
 				case Keyboard.X:
-					_rotateM.appendRotation(-1, new PswVector3D(0, 1, 0));
+					_rotateM.appendRotation(-0.01, new PswVector3D(0, 1, 0));
 					break;
 			}
-			
-			trace(_rotateM)
-			
+			//trace(_camera.viewProjectioin.toMatrix3D().rawData);
+			//trace(_rotateM)
 			_camera.position = _rotateM.vectorMultiply(_camera.position);
-			//trace(_camera.position,_camera.position.length)
+			//trace(_camera.position, _camera.position.length,"_camera.position")
+			//trace(_rotateM)
 			_camera.lookAt(new PswVector3D(0, 0, 0, 1))
 			//trace(_camera.viewProjectioin)
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, _camera.viewProjectioin.toMatrix3D(), false);
@@ -129,6 +135,12 @@ package
 		
 		private function render(e:Event):void 
 		{
+			//_rotateM.appendRotation( 10, new PswVector3D(0, 0, 1));
+			//_camera.position = _rotateM.vectorMultiply(_camera.position);
+			//_camera.lookAt(new PswVector3D(0, 0, 0, 1))
+			//_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, _camera.viewProjectioin.toMatrix3D(), false);
+			//trace(_camera.position,_camera.position.length)
+			
 			_context3D.clear(0, 0, 0, 1);
 			_context3D.drawTriangles(_indexBuffer);
 			_context3D.present();

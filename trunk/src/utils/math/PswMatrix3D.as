@@ -61,22 +61,22 @@ package utils.math
 		
 		public function matrixMultiply(m:PswMatrix3D):void
 		{
-			var na0:Number = a0 *  m.a0 + a1 *  m.a4 + a2 *  m.a8 + a3 *  m.a12;
-			var na1:Number = a0 *  m.a1 + a1 *  m.a5 + a2 *  m.a9 + a3 *  m.a13;
-			var na2:Number = a0 *  m.a2 + a1 *  m.a6 + a2 *  m.a10 + a3 *  m.a14;
-			var na3:Number = a0 *  m.a3 + a1 *  m.a7 + a2 *  m.a11 + a3 *  m.a15;
-			var na4:Number = a4 *  m.a0 + a5 *  m.a4 + a6 *  m.a8 + a7 *  m.a12;
-			var na5:Number = a4 *  m.a1 + a5 *  m.a5 + a6 *  m.a9 + a7 *  m.a13;
-			var na6:Number = a4 *  m.a2 + a5 *  m.a6 + a6 *  m.a10 + a7 *  m.a14;
-			var na7:Number = a4 *  m.a3 + a5 *  m.a7 + a6 *  m.a11 + a7 *  m.a15;
-			var na8:Number = a8 *  m.a0 + a9 *  m.a4 + a10 * m.a8 + a11 * m.a12;
-			var na9:Number = a8 *  m.a1 + a9 *  m.a5 + a10 * m.a9 + a11 * m.a13;
-			var na10:Number = a12 * m.a2 + a13 * m.a6 + a14 * m.a10 + a15 * m.a14;
-			var na11:Number = a8 *  m.a3 + a9 *  m.a7 + a10 * m.a11 + a11 * m.a15;
-			var na12:Number = a12 * m.a0 + a13 * m.a4 + a14 * m.a8 + a15 * m.a12;
-			var na13:Number = a12 * m.a1 + a13 * m.a5 + a14 * m.a9 + a15 * m.a13;
-			var na14:Number = a12 * m.a2 + a13 * m.a6 + a14 * m.a10 + a15 * m.a14;
-			var na15:Number = a12 * m.a3 + a13 * m.a7 + a14 * m.a11 + a15 * m.a15;
+			//var na0:Number = a0 *  m.a0 + a1 *  m.a4 + a2 *  m.a8 + a3 *  m.a12;
+			//var na1:Number = a0 *  m.a1 + a1 *  m.a5 + a2 *  m.a9 + a3 *  m.a13;
+			//var na2:Number = a0 *  m.a2 + a1 *  m.a6 + a2 *  m.a10 + a3 *  m.a14;
+			//var na3:Number = a0 *  m.a3 + a1 *  m.a7 + a2 *  m.a11 + a3 *  m.a15;
+			//var na4:Number = a4 *  m.a0 + a5 *  m.a4 + a6 *  m.a8 + a7 *  m.a12;
+			//var na5:Number = a4 *  m.a1 + a5 *  m.a5 + a6 *  m.a9 + a7 *  m.a13;
+			//var na6:Number = a4 *  m.a2 + a5 *  m.a6 + a6 *  m.a10 + a7 *  m.a14;
+			//var na7:Number = a4 *  m.a3 + a5 *  m.a7 + a6 *  m.a11 + a7 *  m.a15;
+			//var na8:Number = a8 *  m.a0 + a9 *  m.a4 + a10 * m.a8 + a11 * m.a12;
+			//var na9:Number = a8 *  m.a1 + a9 *  m.a5 + a10 * m.a9 + a11 * m.a13;
+			//var na10:Number = a12 * m.a2 + a13 * m.a6 + a14 * m.a10 + a15 * m.a14;
+			//var na11:Number = a8 *  m.a3 + a9 *  m.a7 + a10 * m.a11 + a11 * m.a15;
+			//var na12:Number = a12 * m.a0 + a13 * m.a4 + a14 * m.a8 + a15 * m.a12;
+			//var na13:Number = a12 * m.a1 + a13 * m.a5 + a14 * m.a9 + a15 * m.a13;
+			//var na14:Number = a12 * m.a2 + a13 * m.a6 + a14 * m.a10 + a15 * m.a14;
+			//var na15:Number = a12 * m.a3 + a13 * m.a7 + a14 * m.a11 + a15 * m.a15;
 			//a0 = na0;
 			//a1 = na1;
 			//a2 = na2;
@@ -122,22 +122,25 @@ package utils.math
 			var x:Number = axis.x;
 			var y:Number = axis.y;
 			var z:Number = axis.z;
-			a0 = cos +(1 - cos) * x * x;
-			a1 = (1 - cos) * x * y -z * sin;
-			a2 = (1 - cos) * x * z + y * sin;
-			a3 = pivotPoint.x;
-			a4 = (1 - cos) * x * y + z * sin;
-			a5 = cos +(1 - cos) * y * y;
-			a6 = (1 - cos) * y * z -x * sin;
-			a7 = pivotPoint.y;
-			a8 = (1 - cos) * x * z - y * sin;
-			a9 = (1 - cos) * y * z + x * sin;
-			a10 = cos + (1 - cos) * z * z;
-			a11 = pivotPoint.z;
-			a12 = 0;
-			a13 = 0;
-			a14 = 0;
-			a15 = 1;
+			var tempM:PswMatrix3D = new PswMatrix3D();
+			
+			tempM.a0 = cos +(1 - cos) * x * x;
+			tempM.a1 = (1 - cos) * x * y -z * sin;
+			tempM.a2 = (1 - cos) * x * z + y * sin;
+			tempM.a3 = pivotPoint.x;
+			tempM.a4 = (1 - cos) * x * y + z * sin;
+			tempM.a5 = cos +(1 - cos) * y * y;
+			tempM.a6 = (1 - cos) * y * z -x * sin;
+			tempM.a7 = pivotPoint.y;
+			tempM.a8 = (1 - cos) * x * z - y * sin;
+			tempM.a9 = (1 - cos) * y * z + x * sin;
+			tempM.a10 = cos + (1 - cos) * z * z;
+			tempM.a11 = pivotPoint.z;
+			tempM.a12 = 0;
+			tempM.a13 = 0;
+			tempM.a14 = 0;
+			tempM.a15 = 1;
+			matrixMultiply(tempM);
 		}
 		
 		public function scale(xScale:Number, yScale:Number, zScale:Number):void

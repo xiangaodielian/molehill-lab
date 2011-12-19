@@ -47,7 +47,7 @@ package utils.math
 			(
 			y * a.z -z * a.y, 
 			z * a.x - x * a.z,
-			x * a.y - y * a.z
+			x * a.y - y * a.x
 			);
 		}
 		
