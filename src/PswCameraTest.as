@@ -117,11 +117,12 @@ package
 					_rotateM.appendRotation(-1, new PswVector3D(0, 1, 0));
 					break;
 			}
-			_camera.lookAt(new PswVector3D(0, 0, 0, 1))
+			
 			trace(_rotateM)
+			
 			_camera.position = _rotateM.vectorMultiply(_camera.position);
 			//trace(_camera.position,_camera.position.length)
-			
+			_camera.lookAt(new PswVector3D(0, 0, 0, 1))
 			//trace(_camera.viewProjectioin)
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, _camera.viewProjectioin.toMatrix3D(), false);
 		}
