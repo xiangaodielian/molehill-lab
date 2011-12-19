@@ -15,9 +15,9 @@ package
 		
 		public function PswLight() 
 		{
-			ambient = new Vector.<Number>([0.5,0.6,0.7,1]);
-			diffuse = new Vector.<Number>([0.5,0.6,0.7,1]);
-			specular = new Vector.<Number>([0.5,0.6,0.7,1]);
+			ambient = new Vector.<Number>([1.0,1.0,1.0,1.0]);
+			diffuse = new Vector.<Number>([0.5,0.6,0.7,1.0]);
+			specular = new Vector.<Number>([0.5,0.6,0.7,1.0]);
 		}
 		
 	}
