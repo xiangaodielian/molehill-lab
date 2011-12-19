@@ -1,5 +1,6 @@
 package utils.math 
 {
+	import adobe.utils.CustomActions;
 	/**
 	 * ...
 	 * @author Physwf
@@ -120,6 +121,11 @@ package utils.math
 		public function toString():String 
 		{
 			return "[x=" + x + ",y=" + y + ",z=" + z + ",w=" + w + "]";
+		}
+		
+		public function toVector():Vector.<Number>
+		{
+			return new Vector.<Number>(x,y,z,w);
 		}
 	
 	}

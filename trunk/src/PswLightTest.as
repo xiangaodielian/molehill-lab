@@ -2,6 +2,7 @@ package
 {
 	import camera.lens.PerspectiveLens;
 	import camera.PswCamera;
+	import flash.display.MovieClip;
 	import flash.display3D.Context3DProgramType;
 	import flash.display3D.Context3DTriangleFace;
 	import flash.events.Event;
@@ -17,38 +18,24 @@ package
 	 * ...
 	 * @author Physwf
 	 */
-	public class PswCameraTest extends TestBase 
+	public class PswLightTest extends  TestBase
 	{
+		private var light:PswLight = new PswLight();
 		private var _camera:PswCamera;
 		private var _cPos:PswVector3D;
 		private var _rotateM:PswMatrix3D;
 		private var _translateM:PswMatrix3D;
 		
-		public function PswCameraTest() 
+		public function PswLightTest() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, addStage);
 		}
 		
+		
 		private function addStage(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addStage);
-			//var test:PswMatrix3D = new PswMatrix3D
-			//(
-				//1, 0, 0, 1,
-				//0, 1, 0, 2,
-				//0, 0, 1, 2,
-				//0, 0, 0, 1
-			//);
-			//var test2:PswMatrix3D = new PswMatrix3D
-			//(
-				//1, 0, 0, 1,
-				//0, 1, 0, 1,
-				//0, 0, 1, 1,
-				//0, 0, 0, 1
-			//);
-			//test.matrixMultiply(test2);
-			//trace(test.toString());
-			//return;
+
 			var lens:PerspectiveLens = new PerspectiveLens();
 			lens.fov = 1.0;
 			lens.zNear = 1;
@@ -58,9 +45,7 @@ package
 			_cPos = new PswVector3D(0, 0, -10,1);
 			_camera.position = _cPos;
 			_camera.lookAt(new PswVector3D(0, 0, 0, 1))
-			//trace(_camera.viewProjectioin)
-			//return;
-			//trace(_camera.viewProjectioin.toMatrix3D().rawData);
+
 			_numVertex = RawConst.cubeVertexColor.length / 12;
 			_numIndex = RawConst.cubeIndex.length;
 			_data32PerVertex = 12;
@@ -73,22 +58,33 @@ package
 		{
 			loadVertexBuffer(RawConst.cubeVertexColor);
 			setVertexBufferAt(0, 0, "float3");
-			setVertexBufferAt(1, 3, "float3");
+			setVertexBufferAt(1, 6, "float3");//normal
+			setVertexBufferAt(2, 9, "float3");//material
+			//setVertexBufferAt(2, 9, "float3");
 			loadIndexBuffer(RawConst.cubeIndex);
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, _camera.viewProjectioin.toMatrix3D(), false);
-			//trace(_camera.viewProjectioin.toMatrix3D().rawData,"_camera.viewProjectioin.toMatrix3D().rawData");
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 4, light.ambient, 1);
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 5, light.diffuse, 1);
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 6, light.specular, 1);
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 7, light.pos.toVector(), 1);
+			
 			_rotateM = new PswMatrix3D();
 			_translateM = new PswMatrix3D();
-			//_translateM.prependTranslation(0, 0, 10);
-			//_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, _rotateM.toMatrix3D(), true);
-			//_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 8, _translateM.toMatrix3D(), true);
+
 			_context3D.setCulling(Context3DTriangleFace.BACK);
 			var vertexShaderSrc:String = 
 			//"m44 vt0,va0,vc4\n" +
 			//"m44 vt2 ,vt0,vc8\n"+
 			"m44 vt1 ,va0,vc0\n" +
 			"mov op,vt1\n" +
-			"mov v0,va1\n";
+			"dp3 vt0,va2,vc4\n" +//ambient
+			"sub vt2,vc7,vt1\n" +//从顶点指向光源的矢量L
+			"nrm vt2.xyz,vt2.xyz\n" +
+			"dp3 vt2,vt2,va1\n" +// L·M
+			"dp3 vt2,vt2,vc5" +//diffuse
+			"add vt0,vt0,vt2\n" + //ambient + diffuse
+			//""+
+			"mov v0,vt0\n";
 			var fragmentShaderSrc:String =
 			"mov oc, v0\n";
 			loadShaders(vertexShaderSrc, fragmentShaderSrc);
