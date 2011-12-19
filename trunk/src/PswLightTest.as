@@ -49,7 +49,7 @@ package
 			_numVertex = RawConst.cubeVertexColor.length / 12;
 			_numIndex = RawConst.cubeIndex.length;
 			_data32PerVertex = 12;
-			
+			light.pos=new PswVector3D(30,30,30)
 			
 			createContex();
 		}
@@ -59,29 +59,33 @@ package
 			loadVertexBuffer(RawConst.cubeVertexColor);
 			setVertexBufferAt(0, 0, "float3");
 			setVertexBufferAt(1, 6, "float3");//normal
-			setVertexBufferAt(2, 9, "float3");//material
+			//setVertexBufferAt(2, 9, "float3");//material
 			//setVertexBufferAt(2, 9, "float3");
+			
 			loadIndexBuffer(RawConst.cubeIndex);
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, _camera.viewProjectioin.toMatrix3D(), false);
-			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 4, light.ambient, 1);
-			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 5, light.diffuse, 1);
-			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 6, light.specular, 1);
-			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 7, light.pos.toVector(), 1);
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 4, light.ambient);
+			//return;
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 5, light.diffuse);
 			
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 6, light.specular);
+			
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 7, light.pos.toVector());
+			//return;
 			_rotateM = new PswMatrix3D();
 			_translateM = new PswMatrix3D();
-
+			
 			_context3D.setCulling(Context3DTriangleFace.BACK);
 			var vertexShaderSrc:String = 
 			//"m44 vt0,va0,vc4\n" +
 			//"m44 vt2 ,vt0,vc8\n"+
 			"m44 vt1 ,va0,vc0\n" +
 			"mov op,vt1\n" +
-			"dp3 vt0,va2,vc4\n" +//ambient
+			"mul vt0,va1,vc0\n" +//ambient
 			"sub vt2,vc7,vt1\n" +//从顶点指向光源的矢量L
 			"nrm vt2.xyz,vt2.xyz\n" +
 			"dp3 vt2,vt2,va1\n" +// L·M
-			"dp3 vt2,vt2,vc5" +//diffuse
+			"dp3 vt2,vt2,vc5\n" +//diffuse
 			"add vt0,vt0,vt2\n" + //ambient + diffuse
 			//""+
 			"mov v0,vt0\n";
