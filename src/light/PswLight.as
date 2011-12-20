@@ -1,4 +1,4 @@
-package  
+package light
 {
 	import utils.math.PswVector3D;
 	/**
@@ -15,9 +15,9 @@ package
 		
 		public function PswLight() 
 		{
-			ambient = new Vector.<Number>([1.0,1.0,1.0,1.0]);
-			diffuse = new Vector.<Number>([0.5,0.6,0.7,1.0]);
-			specular = new Vector.<Number>([0.5,0.6,0.7,1.0]);
+			ambient = Vector.<Number>([0.5,0.5,0.50,1.0]);
+			diffuse = Vector.<Number>([0.5,0.6,0.7,1.0]);
+			specular =Vector.<Number>([0.5,0.6,0.7,1.0]);
 		}
 		
 	}
