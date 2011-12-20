@@ -125,7 +125,7 @@ package utils.math
 		
 		public function toVector():Vector.<Number>
 		{
-			return new Vector.<Number>([x,y,z,w]);
+			return Vector.<Number>([x,y,z,w]);
 		}
 	
 	}
