@@ -49,7 +49,7 @@ package
 			_numVertex = RawConst.teapotVertex.length / 6;
 			_numIndex = RawConst.teapotIndex.length;
 			_data32PerVertex = 6;
-			_light.pos = new PswVector3D(0, -30, 50)
+			_light.pos = new PswVector3D(0, 0, 50)
 			
 
 			createContex();
@@ -119,13 +119,27 @@ package
 			"mul ft1,ft1,fc4\n" +//ambient
 			"sub ft2,fc7,v0\n" + //L   
 			"nrm ft2.xyz,ft2\n" + //L nrm
-			"mul ft4,v1,fc11\n"+
+			"mul ft4,v1,fc11\n"+ // inverse z of normal
 			"dp3 ft3,ft2,ft4\n" + //L · N
+			//specular
+			//"mul ft5,ft3,ft4\n" + //(L · N)N
+			//"add ft5,ft5,ft5\n" + //2(L · N)N
+			//"sub ft5,ft5,ft2\n" + //R=2(L · N)N-L
+			//"sub ft6,fc9,v0\n" + // V
+			//"nrm ft6.xyz,ft6\n"+ // V
+			//"dp3 ft5,ft5,ft6\n" +//R · V
+			//"max ft5,ft5,fc8\n"+
+			//"mul ft5,ft5,fc6\n" + //k （R · V）
+			//"mul ft5,ft5,fc10\n" +
+			//"add ft1,ft1,ft5\n" +
+			
 			"max ft3,ft3,fc8\n"+
 			"mul ft3,ft4,ft2\n" +
 			"mul ft3,ft3,fc5\n" +
 			"mul ft3,ft3,fc10\n"+
-			"add ft1,ft1,ft3\n"+
+			"add ft1,ft1,ft3\n" +
+			
+			//"mov ft1,ft5\n"+
 			"mov oc, ft1\n";
 			loadShaders(vertexShaderSrc, fragmentShaderSrc);
 			setProgram();
