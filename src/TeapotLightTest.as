@@ -42,14 +42,14 @@ package
 			lens.zFar = 1000;
 			lens.xyRatio = stage.stageWidth / stage.stageHeight;
 			_camera = new PswCamera(lens);
-			_cPos = new PswVector3D(40, 40, 40,1);
+			_cPos = new PswVector3D(0, 0, 100,1);
 			_camera.position = _cPos;
 			_camera.lookAt(new PswVector3D(0, 0, 0, 1))
 			
 			_numVertex = RawConst.teapotVertex.length / 6;
 			_numIndex = RawConst.teapotIndex.length;
 			_data32PerVertex = 6;
-			_light.pos = new PswVector3D(0, 0, 50)
+			_light.pos = new PswVector3D(0, 0, 0);
 			
 
 			createContex();
@@ -77,8 +77,8 @@ package
 			_context3D.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 8, Vector.<Number>([0, 0, 0, 0]));
 			_context3D.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 9, _camera.position.toVector());
 			
-			_context3D.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 10, Vector.<Number>([0.1, 0.2, 0.6, 1]));
-			_context3D.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 11, Vector.<Number>([1, 1, -1, 1]));
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 10, Vector.<Number>([1, 0, 0, 1]));
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 11, Vector.<Number>([-1, -1, -1, 1]));
 			
 			//return;
 			_rotateM = new PswMatrix3D();
@@ -92,28 +92,7 @@ package
 			"mov op,vt0\n" +//+//output 
 			"mov v0,vt0\n" +// +
 			"m44 v1, va1,vc0\n";//rotate normal
-			//"mul vt0,vt7,vc4\n" +//ambient
-			//"sub vt2,vc7,vt1\n" +//从顶点指向光源的矢量L
-			//"nrm vt2.xyz,vt2.xyz\n" +
-			//"mov vt5,vt2\n"+
-			//"dp3 vt2.z,vt2,vt3\n" +// L·M
-			//"max vt2.z,vt2.z,vc8.z\n" +
-			//"mul vt2,vt2.z,vc5\n" +
-			//"mul vt4,vt3,vt2.z\n" +
-			//"add vt0,vt0,vt2\n" +//diffuse
-			//"add vt4,vt4,vt4\n" +
-			//"sub vt4,vt4,vt5\n" +
-			//"sub vt1,vc9,vt1\n" +
-			//"nrm vt1.xyz,vt1.xyz\n"+
-			//"dp3 vt1.w,vc6,vt1\n" +
-			//"max vt1.w,vt1.w,vc8.z\n"+
-			//"mul vt1,vt1.w,vt7\n"+
-			//"mul vt1,vt1,vc6\n" +
-			//"add vt0,vt1,vt0\n"+
-			//"dp3 vt2,vt2,vc5\n" +//diffuse
-			//"add vt0,vt0,vt2\n" + //ambient + diffuse
-			//""+
-			//"mov v0,vt0\n";
+
 			var fragmentShaderSrc:String =
 			"mov ft1,fc10\n"+//color
 			"mul ft1,ft1,fc4\n" +//ambient
@@ -151,7 +130,7 @@ package
 		private function onKeyDown(e:KeyboardEvent):void 
 		{
 			 _rotateM.identity();
-			//trace(Keyboard.W,e.keyCode)
+			
 			switch(e.keyCode)
 			{
 				
@@ -174,34 +153,33 @@ package
 					_rotateM.appendRotation(-0.1, new PswVector3D(0, 1, 0));
 					break;
 				case Keyboard.UP:
-					_light.pos.z+=6;
+					_light.pos.z+=1;
 					break;
 				case Keyboard.DOWN:
-					_light.pos.z-=6;
+					_light.pos.z-=1;
 					break;
 				case Keyboard.LEFT:
-					_light.pos.x-=6;
+					_light.pos.x-=1;
 					break;
 				case Keyboard.RIGHT:
-					_light.pos.x+=6;
+					_light.pos.x+=1;
 					break;
 				case Keyboard.C:
-					_light.pos.y-=6;
+					_light.pos.y-=1;
 					break;
 				case Keyboard.V:
-					_light.pos.y+=6;
+					_light.pos.y+=1;
 					break;
 			}
-			//trace(_camera.viewProjectioin.toMatrix3D().rawData);
-			//trace(_rotateM)
+
 			_camera.position = _rotateM.vectorMultiply(_camera.position);
-			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 9, _camera.position.toVector());
-			//trace(_camera.position, _camera.position.length,"_camera.position")
-			//trace(_rotateM)
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 9, _camera.position.toVector());
+
 			_camera.lookAt(new PswVector3D(0, 0, 0, 1))
-			//trace(_camera.viewProjectioin)
+
 			_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, _camera.viewProjectioin.toMatrix3D(), false);
-			_context3D.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 7, _light.pos.toVector());
+			_context3D.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 7, _light.pos.toVector());
+			trace(_light.pos.toVector())
 		}
 		
 		private function render(e:Event):void 

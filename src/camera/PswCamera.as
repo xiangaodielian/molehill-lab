@@ -108,7 +108,6 @@ package camera
 			var yAxis:PswVector3D = _direction.crossProduct(xAxis);/*xAxis.crossProduct(_direction); */
 			var zAxis:PswVector3D = _direction;
 		
-			trace(xAxis,yAxis,zAxis,"xAxis,yAxis,zAxis")
 			_rotationMatrix.copyFromRawData
 			(
 				xAxis.x, xAxis.y, xAxis.z, 0,
