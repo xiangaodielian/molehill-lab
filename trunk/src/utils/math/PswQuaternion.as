@@ -96,10 +96,18 @@ package utils.math
             z = fCosRoll * fCosPitch * fSinYaw - fSinRoll * fSinPitch * fCosYaw;
             a = fCosRoll * fCosPitchCosYaw     + fSinRoll * fSinPitchSinYaw;
 		}
-		
-		public function toEulerAngles(target:PswVector3D):void
+		/**
+		 *  上述变换的逆变换
+		 * 根据公式求出三个角度即可
+		 * @param	target
+		 */
+		public function toEulerAngles(target:PswVector3D):PswVector3D
 		{
-			
+			target ||= new PswVector3D();
+			target.x = Math.atan2(2*(w*x + y*z), 1-2*(x*x+y*y));
+			target.y = Math.asin(2*(w*y - z*x));
+			target.z = Math.atan2(2*(w*z + x*y), 1-2*(y*y+z*z));
+			return target;
 		}
 		
 		public function normalize(val:Number=1):void
@@ -111,6 +119,22 @@ package utils.math
 			z *= mag;
 			a *= mag;
 		}
+		/**
+		 * 四元数与旋转矩阵的对应关系可通过欧拉角来获得
+		 *
+		 * @return
+		 */
+		public function toPswMatrix3D():PswMatrix3D
+		{
+			
+		}
+		
+		
+		
+		public function toString(): String
+        {
+            return "{x:" + x + " y:" + y + " z:" + z + " w:" + w + "}";
+        }
 	}
 
 }
