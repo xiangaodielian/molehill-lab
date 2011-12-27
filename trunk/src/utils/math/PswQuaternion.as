@@ -58,6 +58,59 @@ package utils.math
 			
 			return target;
 		}
+		
+		public function fromAxisAngle(axis:PswVector3D, angle:Number):void
+		{
+			var sin:Number = Math.sin(angle * .5);
+			var cos:Number = Math.cos(angle * .5);
+			
+			a = cos;
+			x = axis.x * sin;
+			y = axis.y * sin;
+			z = axis.z * sin;
+			normalize();
+		}
+		/**
+		 * 将欧拉角转换成四元数
+		 * roll pitch yaw
+		 * Tait–Bryan convention（惯例）中，ax，ay，az分别是刚体绕自身x，y，z轴连续旋转相应角度。
+		 * 每一次旋转对应的四元数分别为cos(ai/2)+sin(ai/2)ei,其中ei为旋转轴，i分别为xyz。
+		 * 将每次旋转对应的四元数按顺序相乘便是整体对应的四元数。
+		 * @param	ax
+		 * @param	ay
+		 * @param	az
+		 */
+		public function fromEulerAngles(ax:Number,ay:Number,az:Number):void
+		{
+			var fSinPitch : Number = Math.sin(ax * 0.5);
+            var fCosPitch : Number = Math.cos(ax * 0.5);
+            var fSinYaw : Number = Math.sin(ay * 0.5);
+            var fCosYaw : Number = Math.cos(ay * 0.5);
+            var fSinRoll : Number = Math.sin(az * 0.5);
+            var fCosRoll : Number = Math.cos(az * 0.5);
+            var fCosPitchCosYaw : Number = fCosPitch * fCosYaw;
+            var fSinPitchSinYaw : Number = fSinPitch * fSinYaw;
+
+            x = fSinRoll * fCosPitchCosYaw     - fCosRoll * fSinPitchSinYaw;
+            y = fCosRoll * fSinPitch * fCosYaw + fSinRoll * fCosPitch * fSinYaw;
+            z = fCosRoll * fCosPitch * fSinYaw - fSinRoll * fSinPitch * fCosYaw;
+            a = fCosRoll * fCosPitchCosYaw     + fSinRoll * fSinPitchSinYaw;
+		}
+		
+		public function toEulerAngles(target:PswVector3D):void
+		{
+			
+		}
+		
+		public function normalize(val:Number=1):void
+		{
+			var mag:Number = Math.sqrt(x * x + y * y + z * z + a * a);
+			
+			x *= mag;
+			y *= mag;
+			z *= mag;
+			a *= mag;
+		}
 	}
 
 }
