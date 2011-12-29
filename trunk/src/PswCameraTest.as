@@ -46,7 +46,7 @@ package
 				//0, 0, 1, 1,
 				//0, 0, 0, 1
 			//);
-			//test.matrixMultiply(test2);
+			//test.preMultiply(test2);
 			//trace(test.toString());
 			//return;
 			var lens:PerspectiveLens = new PerspectiveLens();

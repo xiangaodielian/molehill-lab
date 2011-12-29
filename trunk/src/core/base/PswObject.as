@@ -14,6 +14,14 @@ package core.base
 		private var _z:Number = 0;
 		protected var _pos:PswVector3D = new PswVector3D();
 		
+		private var _rotationX:Number = 0;
+		private var _rotationY:Number = 0;
+		private var _rotationZ:Number = 0;
+		private var _rotatationValueDirty:Boolean = false;//当transform改变时，标记为true
+		
+		private var _pivotPoint:PswVector3D = new PswVector3D();
+		private var _pivotZero:Boolean = true;//当pivotPoint分量都为0时标记为true
+		
 		private var _transform:PswMatrix3D = new PswMatrix3D();
 		private var _transformDirty:Boolean = false;
 		
@@ -78,6 +86,48 @@ package core.base
 			return _pos;
 		}
 		
+		public function get rotationX():Number 
+		{
+			return _rotationX;
+		}
+		
+		public function set rotationX(value:Number):void 
+		{
+			_rotationX = value;
+		}
+		
+		public function get rotationY():Number 
+		{
+			return _rotationY;
+		}
+		
+		public function set rotationY(value:Number):void 
+		{
+			_rotationY = value;
+		}
+		
+		public function get rotationZ():Number 
+		{
+			return _rotationZ;
+		}
+		
+		public function set rotationZ(value:Number):void 
+		{
+			_rotationZ = value;
+		}
+		
+		public function get pivotPoint():PswVector3D 
+		{
+			return _pivotPoint;
+		}
+		
+		public function set pivotPoint(value:PswVector3D):void 
+		{
+			_pivotPoint = value;
+			_pivotZero = (_pivotPoint.x == 0 && _pivotPoint.y == 0 && _pivotPoint.z == 0);
+			_transformDirty = true;
+		}
+		
 		public function lookAt(target:PswVector3D,upAxis:PswVector3D):void
 		{
 			var xAxis:PswVector3D, yAxis:PswVector3D, zAxis:PswVector3D;
@@ -101,10 +151,13 @@ package core.base
 		
 		private function updateTransform():void 
 		{
-			
+			if (_rotatationValueDirty) updateTransformValue();
 		}
 			
-		
+		private function updateTransformValue():void
+		{
+			
+		}
 	}
 
 }

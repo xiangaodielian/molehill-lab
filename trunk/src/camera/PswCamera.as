@@ -131,12 +131,12 @@ package camera
 					0, 0, 0, 1
 				);
 				//trace(_rotationMatrix,"_rotationMatrixBefore");
-				_rotationMatrix.matrixMultiply(_translateMatrix);
+				_rotationMatrix.preMultiply(_translateMatrix);
 				//trace(_rotationMatrix, "_rotationMatrixAfter");
 				
 				_viewProjection = _lens.pswMatrix.clone();
 				//trace(_viewProjection);
-				_viewProjection.matrixMultiply(_rotationMatrix);
+				_viewProjection.preMultiply(_rotationMatrix);
 				_isDirty = false;
 			}
 			return _viewProjection;
