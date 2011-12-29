@@ -41,7 +41,7 @@ package
 			var pm1:PswMatrix3D = new PswMatrix3D(a0,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15);
 			var pm2:PswMatrix3D = new PswMatrix3D(a0,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15);
 			m1.append(m2);
-			pm1.matrixMultiply(pm2)
+			pm1.preMultiply(pm2)
 			trace(m1.rawData)
 			trace(pm1)
 		}

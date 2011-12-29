@@ -129,7 +129,28 @@ package utils.math
 			
 		}
 		
+		public function fromPswMatrix3D(matrix:PswMatrix3D):void
+		{
+			
+		}
 		
+		public function clone():PswQuaternion
+		{
+			return new PswQuaternion(a,,x,y,z);
+		}
+		
+		public function rotatePoint():PswVector3D
+		{
+			
+		}
+		
+		public function copyFrom(q:PswQuaternion):void
+		{
+			a = q.a;
+			x = q.x;
+			y = q.y;
+			z = q.z;
+		}
 		
 		public function toString(): String
         {
