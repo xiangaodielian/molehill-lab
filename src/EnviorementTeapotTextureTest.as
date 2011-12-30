@@ -29,7 +29,7 @@ package
 		private var Back2:Class;
 		[Embed(source = "texture/patio/cm_back3.jpg")]
 		private var Back3:Class;
-		[Embed(source = "texture/patio/cm_back4.jpg")]
+		[Embed(source = "texture/patio/cm_back4.jpg")] 
 		private var Back4:Class;
 		[Embed(source = "texture/patio/cm_back5.jpg")]
 		private var Back5:Class;
