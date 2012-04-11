@@ -7,7 +7,7 @@ package
 	 */
 	public class CommunicationAdapter 
 	{
-		private var _adaptee:*;
+		private var _adaptee:LocalCommunication;
 		
 		public function CommunicationAdapter(adaptee:*) 
 		{
@@ -16,7 +16,7 @@ package
 		
 		public function send(data:ByteArray):void
 		{
-			
+			_adaptee.send(data);
 		}
 		
 	}
