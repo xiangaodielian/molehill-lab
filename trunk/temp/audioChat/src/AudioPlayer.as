@@ -10,6 +10,7 @@ package
 	public class AudioPlayer 
 	{
 		private var sound:Sound;
+		private var isLoading:Boolean = false;
 		
 		public function AudioPlayer() 
 		{
@@ -19,12 +20,17 @@ package
 	
 		public function loadAndPlay(stream:ByteArray):void
 		{
-			sound.loadCompressedDataFromByteArray(stream,stream.length);
+			if (isLoading) return;
+			if (!stream.length) return;
+			trace(stream.length,"stream.length");
+			sound.loadPCMFromByteArray(stream,stream.length/4);
+			isLoading = true;
 		}
 		
 		private function onComplete(e:Event):void
 		{
 			sound.play();
+			isLoading = false;
 		}
 		
 	}

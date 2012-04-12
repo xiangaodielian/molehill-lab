@@ -3,6 +3,7 @@ package
 	import flash.events.ActivityEvent;
 	import flash.events.SampleDataEvent;
 	import flash.media.Microphone;
+	import flash.sampler.getSize;
 	import flash.system.Security;
 	import flash.utils.ByteArray;
 	/**
@@ -23,6 +24,7 @@ package
 			microPhone.setSilenceLevel(0, 4000);
 			microPhone.gain = 100;
 			microPhone.rate = 44;
+			microPhone.codec= 
 			buffer = new ByteArray();
 		}
 		
@@ -47,10 +49,16 @@ package
 			{
 				buffer.writeFloat(e.data.readFloat());
 			}
+			trace(getSize(getBuffer()));
+			AudioMediator.getInstance().play();
+			buffer = new ByteArray();
 		}
 		
 		public function getBuffer():ByteArray
 		{
+			//var tempBuffer:ByteArray = buffer;
+			//buffer = new ByteArray();
+			buffer.position = 0
 			return buffer;
 		}
 		
