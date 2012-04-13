@@ -5,6 +5,8 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.SampleDataEvent;
+	import flash.utils.ByteArray;
 	
 	/**
 	 * ...
@@ -22,8 +24,9 @@ package
 		
 		public function Main():void 
 		{
-			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);
+			//if (stage) init();
+			init();
+			//else addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
 		private function init(e:Event = null):void 
@@ -37,7 +40,7 @@ package
 			btnPlay.x = 200;
 			addChild(btnRecord);
 			addChild(btnPlay);
-			trace(btnPlay.enabled);
+			player.addEventListener(getSound);
 			
 			btnRecord.addEventListener(MouseEvent.MOUSE_DOWN, onRecord);
 			btnRecord.addEventListener(MouseEvent.MOUSE_UP,onRecord);
@@ -46,7 +49,24 @@ package
 		
 		private function onPlay(e:MouseEvent):void 
 		{
-			mediator.play();
+			//mediator.play();
+			player.play();
+		}
+		
+		private function getSound(e:SampleDataEvent):void
+		{
+			var temp:ByteArray = recorder.getBuffer();
+			if (!temp) return;
+			
+			temp.position = 0;
+			while (temp.bytesAvailable)
+			{
+				//temp.readFloat()
+				var m:Number = temp.readFloat();
+				var n:Number = Math.sin((Number(temp.position + e.position) / Math.PI / 2)) * 0.25
+				e.data.writeFloat(m);
+				e.data.writeFloat(m);
+			}
 		}
 		
 		private function onRecord(e:MouseEvent):void 
@@ -58,7 +78,7 @@ package
 					recorder.startRecord();
 					break;
 				case MouseEvent.MOUSE_UP:
-					recorder.stopRecord();
+					//recorder.stopRecord();
 					break;
 			}
 		}

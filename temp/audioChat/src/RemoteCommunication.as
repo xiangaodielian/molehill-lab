@@ -1,6 +1,7 @@
 ﻿package {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
@@ -10,7 +11,7 @@
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 
-	public class RemoteCommunication extends Sprite {
+	public class RemoteCommunication{
 		
 		// Socket类
 		private var socket:Socket = null;
@@ -24,9 +25,17 @@
 		// 读message协议包的临时变量,flash的socket具有粘包的说法,所以需要一个临时的地方存放读到的包
 		private var packet_buf:ByteArray;
 		
-		private var localComm:LocalCommunication;
+		private var audioPlayer:AudioPlayer ;
 		
-		public function RemoteCommunication() {
+		public function getBuffer():ByteArray
+		{
+			return packet_buf;
+		}
+		/**
+		 * 注入播放器，实例化远程通信对象
+		 * @param	ap
+		 */
+		public function RemoteCommunication(ap:AudioPlayer)  {
 			// 添加js可以调用的方法
 			if (ExternalInterface.available) 
 			{
@@ -35,13 +44,8 @@
 				ExternalInterface.addCallback("disconnect", disconnect);
 				flashSay('flash init success');
 			}
-			
-			
-			localComm = new LocalCommunication();
-			localComm.connect();
-			localComm.setClient(this);
-			localComm.setMethodName("loadAndPlay");
-
+			audioPlayer = ap;
+			//connect("127.0.0.1",10000);
 		}
 		
 		private function flashSay(me:String):void
@@ -52,7 +56,7 @@
 			}
 		}
 		
-		private function connect(host:String, port:int, policyPort:int = 0):void {
+		public function connect(host:String, port:int, policyPort:int = 0):void {
 			flashSay("param host: " + host + " , param port:" + port);
 			try {
 				if (socket != null) {
@@ -118,12 +122,21 @@
 		 */
 		private function onRecvPacket(packet:ByteArray):void 
 		{
-			//var s:String = packet.readUTFBytes(packet_len);
-			localComm.send(packet);
+			//根据funcname进行相应处理
+			switch(funcname)
+			{
+				case 1:
+					trace(packet.readUTFBytes(packet_len));
+					break;
+				case 2://声音(比如)
+					audioPlayer.play();//调用播放器请求音频数据
+					break;
+			}
+			
 			call("Recv", [funcname, s]);
 			trace("Recv")
 			trace(funcname)
-			trace(s)
+			
 		}
 		
 		
@@ -145,6 +158,8 @@
 				}
 				// 从socket里面读取字节,写入到packet_buf里面去,一直到粘包的大小和packet_len一致了,然后做我们要做的处理
 				socket.readBytes(packet_buf, 0, packet_len - packet_buf.length);
+
+				
 				if (packet_buf.length == packet_len)
 				{
 					onRecvPacket(packet_buf);
@@ -153,8 +168,12 @@
 				}
 			}
 		}
-
-		private function send(f:String , s:String, ba:ByteArray):void 
+		/**
+		 * 发送字符串
+		 * @param	f
+		 * @param	s
+		 */
+		public function sendStringData(f:String , s:String):void 
 		{
 			if (socket == null) 
 			{
@@ -166,20 +185,25 @@
 				call("Error", "FNAME");
 				return;
 			}
-			ba ||= new ByteArray();
+			var ba:ByteArray = new ByteArray();
 			ba.endian = Endian.BIG_ENDIAN;
-			//ba.writeUTFBytes(s);
-			ba.compress();
+			ba.writeUTFBytes(s);
 			socket.writeShort(fncname);
 			socket.writeInt(ba.length);
-			socket.writeBytes(ba);
+			socket.writeFloat(ba.readFloat());
 			socket.flush();
 			trace("flushed");
 		}
-		
-		private function sendAudioData(data:ByteArray):void
+		/**
+		 * 发送声音数据
+		 * @param	data
+		 */
+		public function sendAudioData(data:ByteArray):void
 		{
-			send(null,null,data);
+			socket.writeShort(2);
+			socket.writeInt(data.length);
+			socket.writeFloat(ba.readFloat());
+			socket.flush();
 		}
 		
 		private function disconnect():void 

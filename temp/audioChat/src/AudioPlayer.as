@@ -1,36 +1,36 @@
 package  
 {
 	import flash.events.Event;
+	import flash.events.SampleDataEvent;
 	import flash.media.Sound;
 	import flash.utils.ByteArray;
 	/**
-	 * ...
+	 * 声音播放器
 	 * @author Physwf
 	 */
 	public class AudioPlayer 
 	{
 		private var sound:Sound;
-		private var isLoading:Boolean = false;
+
 		
 		public function AudioPlayer() 
 		{
 			sound = new Sound();
-			sound.addEventListener(Event.COMPLETE,onComplete)
 		}
-	
-		public function loadAndPlay(stream:ByteArray):void
+		/**
+		 * 添加listener,在listener中实现获取音频流的方法
+		 * @param	listener
+		 */
+		public function addEventListener(listener:Function):void 
 		{
-			if (isLoading) return;
-			if (!stream.length) return;
-			trace(stream.length,"stream.length");
-			sound.loadPCMFromByteArray(stream,stream.length/4);
-			isLoading = true;
+			sound.addEventListener(SampleDataEvent.SAMPLE_DATA, listener);
 		}
-		
-		private function onComplete(e:Event):void
+		/**
+		 * 调用请求音频数据
+		 */
+		public function play():void
 		{
 			sound.play();
-			isLoading = false;
 		}
 		
 	}
