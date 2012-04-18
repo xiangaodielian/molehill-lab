@@ -1,5 +1,5 @@
 package   
-{
+{ 
 	import flash.display.Sprite;
 	import flash.events.SampleDataEvent;
 	import flash.media.Sound;
