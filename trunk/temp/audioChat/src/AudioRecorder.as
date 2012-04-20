@@ -59,17 +59,18 @@ package
 		{
 			while (e.data.bytesAvailable)
 			{
-				//buffer.writeFloat(e.data.readFloat());
-				sender.sendAudioData(e.data.readFloat());
+				buffer.writeFloat(e.data.readFloat());
+				//sender.sendAudioData(e.data.readFloat());
 			}	
-			//bufferQueue.push(buffer);
-			//buffer = new ByteArray();
+			bufferQueue.push(buffer);
+			trace(bufferQueue.length)
+			buffer = new ByteArray();
 		}
 		
-		//public function getBuffer():ByteArray
-		//{
-			//return bufferQueue.shift();
-		//}
+		public function getBuffer():ByteArray
+		{
+			return bufferQueue.shift();
+		}
 		
 		
 		

@@ -26,7 +26,7 @@ package
 		{
 			var tempbuffer:ByteArray = recorder.getBuffer();
 			//tempbuffer.compress();
-			player.loadAndPlay(tempbuffer);
+			//player.loadAndPlay(tempbuffer);
 		}
 		
 	}

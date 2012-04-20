@@ -40,6 +40,7 @@ package
 			btnPlay.x = 200;
 			addChild(btnRecord);
 			addChild(btnPlay);
+			
 			player.addEventListener(getSound);
 			
 			btnRecord.addEventListener(MouseEvent.MOUSE_DOWN, onRecord);
@@ -57,13 +58,13 @@ package
 		{
 			var temp:ByteArray = recorder.getBuffer();
 			if (!temp) return;
-			
+			trace(temp.length,"temp.length")
 			temp.position = 0;
 			while (temp.bytesAvailable)
 			{
 				//temp.readFloat()
 				var m:Number = temp.readFloat();
-				var n:Number = Math.sin((Number(temp.position + e.position) / Math.PI / 2)) * 0.25
+				//var n:Number = Math.sin((Number(temp.position + e.position) / Math.PI / 2)) * 0.25
 				e.data.writeFloat(m);
 				e.data.writeFloat(m);
 			}

@@ -39,9 +39,9 @@
 			// 添加js可以调用的方法
 			if (ExternalInterface.available) 
 			{
-				ExternalInterface.addCallback("send", send);
-				ExternalInterface.addCallback("connect", connect);
-				ExternalInterface.addCallback("disconnect", disconnect);
+				//ExternalInterface.addCallback("send", send);
+				//ExternalInterface.addCallback("connect", connect);
+				//ExternalInterface.addCallback("disconnect", disconnect);
 				flashSay('flash init success');
 			}
 			audioPlayer = ap;
@@ -133,7 +133,7 @@
 					break;
 			}
 			
-			call("Recv", [funcname, s]);
+			//call("Recv", [funcname, s]);
 			trace("Recv")
 			trace(funcname)
 			
@@ -202,7 +202,7 @@
 		{
 			socket.writeShort(2);
 			socket.writeInt(data.length);
-			socket.writeFloat(ba.readFloat());
+			socket.writeFloat(data.readFloat());
 			socket.flush();
 		}
 		
